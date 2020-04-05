@@ -1,4 +1,4 @@
-// (THINKME: rather use a library such as npm's rle and random data?)
+// (TODO: rather use a library such as npm's rle and random data?)
 // write a function rleEncode
 //  which takes as input a binary string and
 //  returns it rle-encoding in binary string
