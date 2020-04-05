@@ -15,3 +15,6 @@ E.g. make available a JS module whose classes can be re-used by subsequent scrip
 The best example for this is probably the set of datastructures' functions.
 
 The scripts here may suffer of one problem, as opposed to pseudocode: some syntactic or software-management issues may appear (e.g. the import of libraries). It is hoped that the conciseness of JavaScript makes this nuisance rather small.
+
+Authors: Seraphin Désiré Oyono Obono, adaptations of Paul Libbrecht
+License: These scripts are covered by the IUBH script development mandate.
