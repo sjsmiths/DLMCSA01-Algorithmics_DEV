@@ -14,7 +14,10 @@ Note that the example scripts may give rise to some re-use:
 E.g. make available a JS module whose classes can be re-used by subsequent scripts, even in a later chapter.
 The best example for this is probably the set of datastructures' functions.
 
-The scripts here may suffer of one problem, as opposed to pseudocode: some syntactic or software-management issues may appear (e.g. the import of libraries). It is hoped that the conciseness of JavaScript makes this nuisance rather small.
+The scripts here may suffer of one problem, as opposed to pseudocode: some syntactic or software-management issues may 
+appear (e.g. the import of libraries). It is hoped that the conciseness of JavaScript makes this nuisance rather small.
+
+System requirements: These scripts have been tested with NodeJS 12.
 
 Authors: Séraphin Désiré Eyono Obono, adaptations of Paul Libbrecht
 License: These scripts are covered by the IUBH script development mandate.

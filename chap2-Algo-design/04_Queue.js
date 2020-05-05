@@ -2,18 +2,19 @@
 // ... and that add inserts at beginning while get reads from the end
 
 class Queue {
-    #cursor = null;
+    #startCursor = null;
     #endCursor = null;
     #size = 0;
 
     constructor (earlier) {
         if(earlier) {
             if(! earlier instanceof Queue)  throw new Error("Only previous queues in constructor.");
-            this.#cursor = earlier.#cursor;
+            this.#startCursor = earlier.#startCursor;
             this.#endCursor = earlier.#endCursor;
             this.#size = earlier.#size;
         }
     }
+
     get() {
         if(this.#endCursor) {
             return this.#endCursor.value;
@@ -24,7 +25,7 @@ class Queue {
     retrieve() {
         let endCursor = this.#endCursor;
         if( this.#size === 1) {
-            this.#endCursor = this.#cursor = null;
+            this.#endCursor = this.#startCursor = null;
         } else {
             this.#endCursor = endCursor.prev;
             this.#endCursor.next = null;
@@ -39,27 +40,27 @@ class Queue {
 
     /** Adds an element at the beginning. */
     insert(value) {
-        if (this.#cursor === null) {
+        if (this.#startCursor === null) {
             // empty list, we create one cursor for end and for start
             this.#endCursor =
                 this.#createCursor(null, value, null);
-            this.#cursor =
+            this.#startCursor =
                 this.#createCursor(null, value, null);
         } else if ( this.#size === 1 ) {
-            this.#cursor = this.#createCursor(null, value, this.#endCursor);
-            this.#endCursor.prev = this.#cursor;
+            this.#startCursor = this.#createCursor(null, value, this.#endCursor);
+            this.#endCursor.prev = this.#startCursor;
         } else {
-            let oldCursor = this.#cursor;
-            this.#cursor = this.#createCursor(null, value, oldCursor);
-            if(oldCursor!==null) oldCursor.prev = this.#cursor;
+            let oldCursor = this.#startCursor;
+            this.#startCursor = this.#createCursor(null, value, oldCursor);
+            if(oldCursor!==null) oldCursor.prev = this.#startCursor;
         }
         this.#size++;
         return this;
     }
 
     toString() {
-        if ( this.#cursor === null) return "[]";
-        let cur = this.#cursor;
+        if ( this.#startCursor === null) return "[]";
+        let cur = this.#startCursor;
         let s = "[";
         while (true) {
             s = s + '' + JSON.stringify(cur.value) + '';
