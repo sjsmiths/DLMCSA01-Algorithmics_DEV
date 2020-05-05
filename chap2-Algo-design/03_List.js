@@ -27,6 +27,7 @@ class ListCursor {
 
     }
 
+    /** Adds an element after the current and moves to this element. */
     add(value) {
         if (this.#cursor === null) {
             // empty list
@@ -39,6 +40,14 @@ class ListCursor {
             oldCursor.next = this.#cursor;
             this.#size++;
         }
+        return this;
+    }
+
+    /** Insert an element at the current position and stays there. */
+    insert(value) {
+        let wasEmpty = this.#cursor === null;
+        if(!wasEmpty) this.gotoPrev();
+        this.add(value);
         return this;
     }
 
@@ -82,11 +91,13 @@ class ListCursor {
 
 
     gotoNext() {
-        if ( this.#cursor === null)  throw new Error("No next");
+        if ( this.#cursor === null || this.#cursor.next === null)
+            throw new Error("No next");
         this.#cursor = this.#cursor.next;
     }
     gotoPrev() {
-        if ( this.#cursor == null)  throw new Error("No next");
+        if ( this.#cursor === null || this.#cursor.prev === null)
+            throw new Error("No prev");
         this.#cursor = this.#cursor.prev;
     }
 
@@ -109,7 +120,7 @@ class ListCursor {
     }
 
     gotoPosition(n) {
-        if(n<0 || n>= size) throw new Error("Out of bounds");
+        if(n<0 || n>= this.#size) throw new Error("Out of bounds");
         this.gotoStart();
         for ( let i = 0; i< n; i++) this.gotoNext();
         return this;
@@ -124,14 +135,14 @@ class ListCursor {
         return localCursor.get();
     }
 
-    displayMe() {
+    toString() {
         if ( this.#cursor === null) return "[]";
         let lc = new ListCursor(this);
         let s = "[";
         lc.gotoStart();
         while (true) {
             if ( lc.#cursor === this.#cursor) s = s + "_";
-            s = s + '"' + lc.get() + '"';
+            s = s + '' + JSON.stringify(lc.get()) + '';
             if ( lc.#cursor === this.#cursor) s = s + "_";
             if (lc.hasNext()) s = s + ", ";
             if (!lc.hasNext()) break;
@@ -151,25 +162,43 @@ class ListCursor {
 
 }
 
+// example manipulation of ListCursor
 console.log("Let's create an empty listcursor");
 var listCursor = new ListCursor();
-console.log(listCursor.displayMe());
-console.log("Add a number to ");
-listCursor.add(5);
-console.log(listCursor.displayMe());
-console.log("Add more things.");
-listCursor.add(7).add('hello').add(NaN);
-console.log(`The contents: ${listCursor.displayMe()}.`);
+console.log(listCursor);
+console.log("Add a member to it.");
+listCursor.add("james");
+console.log(listCursor);
+console.log("Add more members.");
+listCursor.add('joe').add('jil').add({name:"jimmy"});
+console.log(`The contents: ${listCursor}.`);
+console.log("moving cursor to the left.")
 listCursor.gotoPrev();
+console.log(`The contents: ${listCursor}.`);
 console.log(`Current element ${listCursor.get()}.`);
-cp = 77;
+cp = {hisname: "june"};
 listCursor.set(cp);
-console.log(`Have set, current element: ${listCursor.displayMe()}.`);
+console.log(`Have set, current element: ${listCursor}.`);
+console.log("Moving to position 1.");
+listCursor.gotoPosition(1);
+console.log(`Removing from ${listCursor}`);
 listCursor.remove();
-console.log(`Have removed, current element: ${listCursor.displayMe()}.`);
-console.log(listCursor.displayMe());
+console.log(`Have removed, current element: ${listCursor}.`);
 
 
 
+// a gospel example
+console.log();
+console.log("A gospel example")
+let l = new ListCursor();
+["G", "O", "O", "D","G","O","D", "L", "O", "R", "D"].forEach((t)=> {l.add(t);})
+l.gotoPosition(2);
+console.log(`A list:  ${l}`);
+console.log("Removing.")
+l.remove();
+console.log(`List has become ${l}.`)
+console.log("Inserting L");
+l.insert("L")
+console.log(`List has become ${l}.`)
 
 
