@@ -1,10 +1,8 @@
-var sum = function (n) {
+let sum = function (n) {
     if (n>=0) {
-        var i = 0;
-        var s = 0;
-        for (i=1; i<=n; i++) {
+        let s = 0;
+        for (let i=1; i<=n; i++)
             s = s + i;
-        }
         return s;
     }
 }
@@ -12,7 +10,7 @@ var sum = function (n) {
 var readline = require('readline-sync');
 
 while (true){
-    var m = parseInt(readline.question("An integer please: "));
-    var sm = sum(m);
+    let m = parseInt(readline.question("An integer please: "));
+    let sm = sum(m);
     console.log((m+1) + ' first integers added: ' + sm + '\n');
 }
