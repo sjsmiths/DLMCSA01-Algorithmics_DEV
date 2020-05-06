@@ -1,13 +1,9 @@
-var facto = function (m) {
+const facto = (m) => {
     if (m>=0) {
-        if (m==0){
-            var f = 1;
-            return f;
-        }
-        else {
-            var f = m*facto(m-1);
-            return f;
-        }
+        if ( m==0 )
+            return 1;
+        else
+            return m*facto(m-1);
     }
 }
 

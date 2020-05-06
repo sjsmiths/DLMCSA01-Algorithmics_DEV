@@ -1,4 +1,4 @@
-let sum = function (n) {
+const sum = (n) => {
     if (n>=0) {
         let s = 0;
         for (let i=1; i<=n; i++)
@@ -7,7 +7,7 @@ let sum = function (n) {
     }
 }
 
-var readline = require('readline-sync');
+const readline = require('readline-sync');
 
 while (true){
     let m = parseInt(readline.question("An integer please: "));

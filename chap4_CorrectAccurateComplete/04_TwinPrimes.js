@@ -1,12 +1,11 @@
-var isPrime = function (m) {
-    var d = true;
-    if (m==2) {
+const isPrime = (m) => {
+    let d = true;
+    if (m==2)
         d = false;
-    }
     if (m>2) {
-        var i = 2;
-        var d = ((m % i) == 0);
-        while ((d==false) && (i<m-1)){
+        let i = 2;
+        d = ((m % i) == 0);
+        while ( d==false && i<m-1 ){
             i++;
             d = ((m % i) == 0);
         }
@@ -14,12 +13,11 @@ var isPrime = function (m) {
     return !d;
 }
 
-var  twinP = function (m) {
+const  twinP = (m) => {
     if (m>=0) {
-        var p = m;
-        while ((isPrime(p)==false) || (isPrime(p+2)==false)){
+        let p = m;
+        while (!isPrime(p) || !isPrime(p+2))
             p++;
-        }
         return p;
     }
 }
@@ -27,9 +25,9 @@ var  twinP = function (m) {
 var readline = require('readline-sync');
 
 while (true){
-    var mes = "\nPositive integer please: ";
-    var n = parseInt(readline.question(mes));
-    var p = twinP(n);
+    let mes = "\nPositive integer please: ";
+    let n = parseInt(readline.question(mes));
+    let p = twinP(n);
     console.log("First twin primes from " + n);
     console.log(p + " and " + (p+2));
 }

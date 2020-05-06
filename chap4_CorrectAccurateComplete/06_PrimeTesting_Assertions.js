@@ -1,12 +1,12 @@
-var isPrime = function (m) {
-    var assert = require('assert');
+const isPrime = (m) => {
+    const assert = require('assert');
     assert(Number.isInteger(m)==true,"Sorry! Only integers please!");
     assert(m>=0,"Sorry! No negatives please!");
-    var d = true;
-    if (m==2) {d = false;}
+    let d = true;
+    if (m==2) d = false;
     if (m>2) {
-        var i = 2;
-        var d = ((m % i) == 0);
+        let i = 2;
+        let d = ((m % i) == 0);
         while ((d==false) && (i<m-1)){
             i++;
             d = ((m % i) == 0);
@@ -15,10 +15,10 @@ var isPrime = function (m) {
     return !d;
 }
 
-var readline = require('readline-sync');
+const readline = require('readline-sync');
 
 while (true) {
-    var num = Number(readline.question("An integer please: "));
-    var pri = isPrime(num);
+    const num = Number(readline.question("An integer please: "));
+    let pri = isPrime(num);
     console.log(num + ' is prime: ' + pri + '\n');
 }

@@ -1,18 +1,16 @@
-var isPrime = function (m) {
-    if (Number.isInteger(m)==false){
-        return new Error("Sorry! Only integers please!");
-    }
+const isPrime = (m) => {
+    if (!Number.isInteger(m))
+        throw new Error("Sorry! Only integers please!");
     else {
-        if (m<0){
-            return new Error("Sorry! No negatives please!");
-        }
+        if (m<0)
+            throw new Error("Sorry! No negatives please!");
         else {
-            var d = true;
+            let d = true;
             if (m==2) {d = false;}
             if (m>2) {
-                var i = 2;
-                var d = ((m % i) == 0);
-                while ((d==false) && (i<m-1)){
+                let i = 2;
+                let d = ((m % i) == 0);
+                while ( d==false && i<m-1 ){
                     i++;
                     d = ((m % i) == 0);
                 }
@@ -25,13 +23,11 @@ var isPrime = function (m) {
 
 var readline = require('readline-sync');
 while (true){
-    var num = Number(readline.question("An integer please: "));
-    var pri = isPrime(num);
-
-    if ( pri instanceof Error ) {
-        console.log(num + ' is prime: ' , pri, '\n');
-    }
-    else {
-        console.log(num + ' is prime: ' + pri + '\n');
+    let num = Number(readline.question("An integer please: "));
+    try {
+        let pri = isPrime(num);
+        console.log(`Is prime? ${pri}`)
+    } catch (e) {
+        console.log(`An error occurred: ${e}`)
     }
 }

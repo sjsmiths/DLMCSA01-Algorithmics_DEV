@@ -1,15 +1,13 @@
-var collatz = function (n1) {
+const collatz = (n1) => {
     if (n1>0) {
-        var m = n1;
-        var c = new Array();
+        let m = n1;
+        let c = new Array();
         c.push(m);
         while (m>1) {
-            if ((m%2)==0){
+            if ( m%2==0 )
                 m = m / 2;
-            }
-            else {
+            else
                 m = (3*m) + 1;
-            }
             c.push(m);
         }
         return c;
@@ -20,9 +18,9 @@ var collatz = function (n1) {
 var readline = require('readline-sync');
 
 while (true){
-    var mes = "\nStricly positive integer please: ";
-    var n = parseInt(readline.question(mes));
-    var cn = new Array();
+    let mes = "\nStricly positive integer please: ";
+    let n = parseInt(readline.question(mes));
+    let cn = new Array();
     cn = collatz(n);
     console.log("Collatz sequence of " + n);
     console.log(cn);
