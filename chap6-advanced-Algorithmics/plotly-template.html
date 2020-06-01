@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><title>Graphic</title>
+    <meta charset="utf-8"/>
+    <script src="../node_modules/plotly.js-dist/plotly.js" charset="utf-8"></script>
+    <script src="data.js"></script>
+</head>
+<div id="graphDiv"></div>
+<script>
+    let x = [], y = []
+    data.forEach(e => { x.push(e[0]); y.push(e[1]); });
+    Plotly.newPlot('graphDiv', [{x: x, y: y, type: 'line'}], {title: 'mode mr'});
+</script>
+</html>
