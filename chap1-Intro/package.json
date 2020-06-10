@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "The set of scripts of Algorithmics' chapt1",
   "main": "01_greetings.js",
-  "dependencies": {},
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

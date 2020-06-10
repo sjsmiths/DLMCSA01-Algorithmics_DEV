@@ -1,13 +1,9 @@
-// build a connection to the terminal
-const readline = require("readline");
-const terminal = readline.createInterface(
-  { input: process.stdin, output: process.stdout });
+let readline = require('readline-sync');
 
-// ask a question
-terminal.question("What is your name ? ", function(name) {
-  // do something with the answer
-  terminal.write("Hello World\nKind Regards\n");
-  // a string with a reference to a variable
-  terminal.write(`${name}, hi!\n`);
-  terminal.close();
-});
+while (true){
+  let name = readline.question('\nWhat is your name? ');
+  // \n is the character to go to a new line  
+  console.log('Hello ' + name);
+  // The plus sign stands here for the concatenation operator  
+  console.log('Kind Regards');
+}
