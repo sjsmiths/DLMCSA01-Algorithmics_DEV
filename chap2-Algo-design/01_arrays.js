@@ -1,20 +1,39 @@
-// each block here can be copy and pasted into a REPL console
-// started by simply invoking "node"
+let readline = require('readline-sync');
 
-// create an array of a first size
-n1 = 5;
-var arr1 = new Array(n1)
-arr1[0] = 'Z'
-arr1[1] = 'Y'
-arr1[2] = 'X'
-arr1[3] = 'W'
-arr1[4] = 'V'
+let captureElements = function (n,m,arr) {
+    let mess = 'Please enter your next element ';
+    for (i = 0; i < n; i++) {
+        arr[i] = readline.question(mess);
+    }
+    for (i = 0; i < m; i++) {
+        arr.push(readline.question(mess));
+    }
+}
 
-// one can add new elements, growing the array
-arr1.push('U');
+let displayArray = function (mess, arr) {
+    console.log(mess);
+    console.log(arr);
+}
 
-// iterating through the array to print it
-arr1.forEach ( function ( m ) {
-    console.log (" Array member " + m);
-});
+let posInt = function(s){
+    let n = Number(s);
+    return s!=='' && Number.isInteger(n) &&  n>=0;
+}
 
+while (true){
+    let mess1 = '\nInitial size of the array please ';
+    let mess2 = 'How many additional elements please? ';
+    let mess3 = 'Only positive integers please!';
+    let ns = readline.question(mess1);
+    let ms = readline.question(mess2);
+    if ((posInt(ns)) && (posInt(ms))){
+        n1 = parseInt(ns);
+        let arr1 = new Array(n1);
+        n2 = parseInt(ms);
+        captureElements(n1,n2,arr1);
+        displayArray('Content of the array',arr1);
+    }
+    else {
+        console.log(mess3);
+    }
+}

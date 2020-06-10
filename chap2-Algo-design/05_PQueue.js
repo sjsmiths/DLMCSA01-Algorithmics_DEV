@@ -1,106 +1,121 @@
+let readlineSync = require('readline-sync');
 
-class PQueue {
-    #startCursor = null;
-    #endCursor = null;
-    #size = 0;
-
-    constructor (earlier) {
-        if(earlier) {
-            if(! earlier instanceof PQueue)  throw new Error("Only previous queues in constructor.");
-            this.#startCursor = earlier.#startCursor
-            this.#endCursor = earlier.#endCursor;
-            this.#size = earlier.#size;
+class PQueueNodeClass {
+    constructor (e,pr,newNode) {
+        this.valueInNode = e;
+        this.priority = pr;
+        this.NodeSucc = newNode;
+    }
+    getValueInNode() {return this.valueInNode;}
+    getPriority() {return this.priority;}
+    getPriorityPosition() {
+        let curr = this;
+        if (curr.NodeSucc === undefined){return -1;} else {
+            curr = curr.NodeSucc; let hprl = curr.priority;
+            let i = 0; let prp = i;
+            while (curr.NodeSucc !== undefined){
+                i++; curr = curr.NodeSucc;
+                if (curr.priority<hprl){hprl=curr.priority; prp=i;}
+            } return prp;
         }
     }
-
-    retrieve() {
-        let endCursor = this.#endCursor;
-        if( this.#size === 1) {
-            this.#endCursor = this.#startCursor = null;
-        } else {
-            this.#endCursor = endCursor.prev;
-            this.#endCursor.next = null;
+    getElementInPosition(p) {
+        let curr = this;
+        let i = -1;
+        while (i<p && curr.NodeSucc !== undefined){
+            i++; curr = curr.NodeSucc;
         }
-        this.#size --;
-        return endCursor.value;
+        if (i===p){return(curr.valueInNode);} else {return undefined;}
     }
-
-    offer(value, priority) {
-        return this.insert(value, priority);
+    getPriorityInPosition(p) {
+        let curr = this;
+        let i = -1;
+        while ((i<p) && (curr.NodeSucc !== undefined)){
+            i++; curr = curr.NodeSucc;
+        }
+        if (i===p){return (curr.priority);} else {return undefined;}
     }
-
-    insert(value, prio) {
-        if (this.#startCursor === null) {
-            // empty list, we create one cursor for end and for start
-            this.#endCursor =
-                this.#createCursor(null, value, prio, null);
-            this.#startCursor =
-                this.#createCursor(null, value, prio, null);
-        } else if ( this.#size === 1) {
-            if ( this.#startCursor.prio < prio ) {
-                this.#endCursor = this.#createCursor(this.#startCursor, value, prio, null);
-                this.#startCursor.next = this.#endCursor;
-            } else {
-                this.#startCursor = this.#createCursor(null, value, prio, this.#endCursor);
-                this.#endCursor.prev = this.#startCursor;
+    putMeAtEndAfter(oldQueue) {
+        let curr = oldQueue;
+        while (curr.NodeSucc !== undefined) {curr = curr.NodeSucc;}
+        curr.NodeSucc = this;
+    }
+    removeElementInPosition(p) {
+        if (p !== -1){
+            let curr= this;
+            let prev=new PQueueNodeClass(undefined,undefined,undefined);
+            let i = -1;
+            while (i<p && (curr.NodeSucc !== undefined)){
+                i++; prev = curr; curr = curr.NodeSucc;
             }
-            // TODO: this is not clean yet.
-        } else {
-            // find the proper position: we want to insert right before
-            // an element with the priority greater or equal to prio
-            let c = this.#startCursor;
-            while ( c.prio < prio && c.next)
-                c = c.next;
-
-            if( c === this.#startCursor && c.prio >= prio) { // at start
-                this.#startCursor =
-                    this.#createCursor(null, value, prio, c);
-            } else if (c.next) { // not at end, insert there and push right
-                c.prev = this.#createCursor(c.prev, value, prio, c);
-                c.prev.next = c;
-            } else { // at end
-                if( c.prio < prio ) {
-                    this.#endCursor = this.#createCursor(c, value, prio, null);
-                    c.next = this.#endCursor;
-                }  else {
-                    c.prev = this.#createCursor(c.prev, value, prio, c);
-                    this.#endCursor.prev.next = c.prev;
-                }
+            if (i===p) {prev.NodeSucc = curr.NodeSucc;}
+        }
+    }
+    displayMe(){
+        let s = 'Displaying the queue';
+        let currSucc = this.NodeSucc;
+        while (currSucc !== undefined){
+            if (currSucc.valueInNode !== undefined) {
+                s=s+'<----('+currSucc.getValueInNode()+':'+currSucc.priority+')';
             }
+            currSucc = currSucc.NodeSucc;
         }
-        this.#size++;
-        return this;
+        return(s);
     }
-
-    toString() {
-        if ( this.#startCursor === null) return "[]";
-        let cur = this.#startCursor;
-        let s = "[";
-        while (true) {
-            s = s + cur.prio + ":" + JSON.stringify(cur.value) + '';
-            if (cur.next===null) break;
-            s = s + ", ";
-            cur = cur.next;
-        }
-        s = s + "]";
-        return s;
+}
+class PQueueClass {
+    constructor (pqp) {
+        this.queue = pqp;
     }
-
-
-    #createCursor = (prev, value, prio, next) => {
-        if (prev===null) prev = null;
-        if (next===null) next = null;
-        return {prev: prev, next: next, prio: prio, value};
+    getElement() {return ((this.queue).getElementInPosition(0));}
+    removeCurrentElement(){(this.queue).removeElementInPosition(0);}
+    getHighestPriorityElement() {
+        let hprp = (this.queue).getPriorityPosition();
+        return ((this.queue).getElementInPosition(hprp));
     }
-
+    getPriorityLevelOFHighestPriorityElement() {
+        let hprp = (this.queue).getPriorityPosition();
+        return ((this.queue).getPriorityInPosition(hprp));
+    }
+    removeHighestPriorityElement() {
+        let hprp = (this.queue).getPriorityPosition();
+        (this.queue).removeElementInPosition(hprp);
+    }
+    displayMe() {return(this.queue.displayMe());}
+}
+let captureElements = function (n1) {
+    let rootNode=new PQueueNodeClass(undefined,undefined,undefined);
+    let prevQueue=new PQueueNodeClass(undefined,undefined,undefined);
+    prevQueue=rootNode; let mess = 'Please enter your next element ';
+    for (i = 0; i < n1; i++) {
+        prtl = Math.floor((Math.random() * 100) + 1);
+        e = readlineSync.question(mess);
+        let newNode = new PQueueNodeClass(e,prtl,undefined);
+        newNode.putMeAtEndAfter(prevQueue);
+    } return prevQueue;
+}
+let posInt = function(s){
+    let n = Number(s);
+    return((s!=='') && (Number.isInteger(n)) &&  (n>=0))
 }
 
-var pq = new PQueue();
-console.log("Let's make a family");
-pq.offer("son1", 7).offer("daughter", 8).offer("son2", 9)
-    .offer("granddad", 65).offer("grandmom", 61)
-    .offer("dad", 30).offer("mom", 35);
-console.log(`The family in priority order: ${pq}`);
-
-console.log(`Let's start with picking the highest priority ${pq.retrieve()}`)
-console.log(`Family now is ${pq}.`)
+while(true) {
+    let mess1 = '\nPlease how many elements do you have? ';
+    let mess2 = 'Only positive integers please!';
+    let ns = readlineSync.question(mess1);
+    if (posInt(ns)){
+        let n = parseInt(ns);
+        let pqn = new PQueueNodeClass(undefined,undefined,undefined);
+        pqn = captureElements(n); let pq = new PQueueClass(pqn);
+        console.log(pq.displayMe());
+        console.log('\nLet us remove first element of the queue');
+        pq.removeCurrentElement(); console.log(pq.displayMe());
+        let pl = pq.getPriorityLevelOFHighestPriorityElement();
+        console.log('\nHighest priority element');
+        console.log(pq.getHighestPriorityElement()+' Priority no '+ pl);
+        console.log('\nLet us remove highest priority element');
+        pq.removeHighestPriorityElement();console.log(pq.displayMe());
+        console.log('\nLet us remove first element of the queue');
+        pq.removeCurrentElement(); console.log(pq.displayMe());
+    } else {console.log(mess2);}
+}

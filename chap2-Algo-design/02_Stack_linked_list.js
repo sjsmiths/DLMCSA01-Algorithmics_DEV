@@ -1,60 +1,79 @@
-class Stack {
-    push ( obj ) {
-        this.#topNode = this.#createStackNode ( obj, this.#topNode);
+let readline = require('readline-sync');
+class StackNode {
+    constructor (top,prevNode) {
+        this.topElement = top;
+        this.prevTopNode = prevNode;
     }
 
-    peek ( ) {
-        return this.#topNode.element;
+    getTopElement() {
+        return this.topElement;
     }
 
-    pop ( ) {
-        let t = this.#topNode;
-        this.#topNode = t.previousNode;
-        return t.element;
+    putMeOnTopOf(oldTopNode) {
+        this.prevTopNode = oldTopNode;
     }
 
-    render ( ) {
-        let t = this.#topNode, r = "";
-        while ( typeof(t) !== "undefined" ) {
-            r = r + (r.length>0 ? ", " : "") + t.element;
-            t = t.previousNode;
+    removeMyTop() {
+        if (this.prevTopNode !== undefined){
+            this.topElement = this.prevTopNode.topElement;
+            this.prevTopNode = this.prevTopNode.prevTopNode;
         }
-        return r;
+        else {
+            this.topElement = undefined;
+            this.prevTopNode = undefined;
+        }
     }
 
-    empty ( ) {
-        return typeof(this.#topNode) === "undefined"
+    displayMe(){
+        let txt = 'Displaying the stack';
+        txt = txt + '\nTop of the stack';
+        let currTopEl = this.topElement;
+        let currPredNode = this.prevTopNode;
+        while (currTopEl !== undefined){
+            txt = txt + '\n' + currTopEl;
+            if (currPredNode !== undefined){
+                currTopEl = currPredNode.topElement;
+                currPredNode = currPredNode.prevTopNode;
+            }
+            else {currTopEl = undefined;}
+        }
+        txt = txt + '\nBottom of the stack\n';
+        return txt;
     }
-
-    #createStackNode = function ( element, previous ) {
-        return {
-            element: element,
-            previousNode: previous
-        };
+}
+let captureElements = function (n1) {
+    let oldStack = new StackNode(undefined,undefined);
+    let finalStack = new StackNode(undefined,undefined);
+    let mess = 'Please enter your next element ';
+    for (let i = 0; i < n1; i++) {
+        let e = readline.question(mess);
+        let newNode = new StackNode(e,undefined);
+        newNode.putMeOnTopOf(oldStack);
+        oldStack = newNode;
+        finalStack = newNode;
     }
-
-    #topNode = undefined;
+    if (n1>0) {return finalStack;}
+    else {return oldStack;}
 }
 
-// create stack
-let s = new Stack();
+let posInt = function(s){
+    let n = Number(s);
+    return s!=='' && Number.isInteger(n) && n>=0;
+}
 
-// add a few elements
-s.push('A');
-s.push('B');
-s.push('C');
-
-// what's on top?
-console.log( `Found on top of s: ${s.peek()}.` );
-
-// print stack
-console.log(`Stack is rendered to (${s.render()}).`)
-
-// pile them into next stack
-console.log("Let's unpile and stack.")
-let t = new Stack();
-do {
-    t.push ( s.pop() );
-    console.log ( `Stack s: (${s.render()}) and t: (${t.render()}).`)
-} while ( ! s.empty())
-console.log("If you unpile and stack... you revert.")
+while (true){
+    let mess1 = '\nPlease how many elements do you have? ';
+    let mess2 = 'Only positive integers please!';
+    let ns = readline.question(mess1);
+    if (posInt(ns)){
+        n = parseInt(ns);
+        let s = new StackNode(undefined,undefined);
+        s = captureElements(n);
+        console.log('\nCurrent stack');
+        console.log(s.displayMe());
+        s.removeMyTop();
+        console.log('\nOne element removed from the stack');
+        console.log(s.displayMe());
+    }
+    else {console.log(mess2);}
+}
