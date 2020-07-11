@@ -1,24 +1,24 @@
 let readline = require('readline-sync');
-class StackNode {
-    constructor (top,prevNode) {
+class NodeClass {
+    constructor (top,prevNode){
         this.topElement = top;
         this.prevTopNode = prevNode;
     }
 
-    getTopElement() {
+    getTopElement(){
         return this.topElement;
     }
 
-    putMeOnTopOf(oldTopNode) {
+    putMeOnTopOf(oldTopNode){
         this.prevTopNode = oldTopNode;
     }
 
-    removeMyTop() {
+    removeMyTop(){
         if (this.prevTopNode !== undefined){
-            this.topElement = this.prevTopNode.topElement;
-            this.prevTopNode = this.prevTopNode.prevTopNode;
+            this.topElement = (this.prevTopNode).topElement;
+            this.prevTopNode = (this.prevTopNode).prevTopNode;
         }
-        else {
+        else{
             this.topElement = undefined;
             this.prevTopNode = undefined;
         }
@@ -38,36 +38,37 @@ class StackNode {
             else {currTopEl = undefined;}
         }
         txt = txt + '\nBottom of the stack\n';
-        return txt;
+        return(txt);
     }
 }
-let captureElements = function (n1) {
-    let oldStack = new StackNode(undefined,undefined);
-    let finalStack = new StackNode(undefined,undefined);
+
+let captureElements = function (n1){
+    let oldStack = new NodeClass(undefined,undefined);
+    let finalStack = new NodeClass(undefined,undefined);
     let mess = 'Please enter your next element ';
-    for (let i = 0; i < n1; i++) {
+    for (let i = 0; i < n1; i++){
         let e = readline.question(mess);
-        let newNode = new StackNode(e,undefined);
+        let newNode = new NodeClass(e,undefined);
         newNode.putMeOnTopOf(oldStack);
         oldStack = newNode;
         finalStack = newNode;
     }
-    if (n1>0) {return finalStack;}
+    if (n1>0){return finalStack;}
     else {return oldStack;}
 }
 
 let posInt = function(s){
     let n = Number(s);
-    return s!=='' && Number.isInteger(n) && n>=0;
+    return((s!=='') && (Number.isInteger(n)) &&  (n>=0))
 }
 
 while (true){
     let mess1 = '\nPlease how many elements do you have? ';
     let mess2 = 'Only positive integers please!';
     let ns = readline.question(mess1);
-    if (posInt(ns)){
-        n = parseInt(ns);
-        let s = new StackNode(undefined,undefined);
+    if (posInt(ns)===true){
+        let n = parseInt(ns);
+        let s = new NodeClass(undefined,undefined);
         s = captureElements(n);
         console.log('\nCurrent stack');
         console.log(s.displayMe());

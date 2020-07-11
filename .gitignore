@@ -1,6 +1,7 @@
 .idea
 
 node_modules
+pts.js
 
 # Logs
 logs

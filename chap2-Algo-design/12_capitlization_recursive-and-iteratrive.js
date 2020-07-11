@@ -5,8 +5,8 @@ let cpI = function (s1) {
         return r;
     }
 }
-let cpR = function (s1) {
-    if (s1.length>0) {
+let cpR = function (s1){
+    if (s1.length>0){
         if (s1.length===1) {return s1[0].toUpperCase();}
         else {
             return((s1[0].toUpperCase())+cpR(s1.substring(1,s1.length)));

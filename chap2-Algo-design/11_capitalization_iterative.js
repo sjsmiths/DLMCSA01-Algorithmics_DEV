@@ -2,7 +2,7 @@ let readline = require('readline-sync');
 let capIter = function (s1) {
     if (s1.length>0) {
         let r = "";
-        for (let i=0; i<s1.length; i++) {
+        for (let i=0; i<s1.length; i++){
             r = r + s1[i].toUpperCase();
         }
         return r;

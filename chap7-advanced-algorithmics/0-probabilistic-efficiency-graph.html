@@ -2,12 +2,14 @@
 <html>
 <head><title>Graphic</title>
     <meta charset="utf-8"/>
-    <script src="./node_modules/plotly.js-dist/plotly.js" charset="utf-8"></script>
-    <script src="data.js"></script>
+    <script src="node_modules/plotly.js-dist/plotly.js" charset="utf-8"></script>
+    <script>module={}; module.exports={};</script>
+    <script src="pts.js"></script>
 </head>
 <div id="graphDiv"></div>
 <script>
     let x = [], y = []
+    if(module.exports.exPts) data = module.exports.exPts;
     data.forEach(e => { x.push(e[0]); y.push(e[1]); });
     Plotly.newPlot('graphDiv', [{x: x, y: y, type: 'line'}], {title: 'mode mr'});
 </script>

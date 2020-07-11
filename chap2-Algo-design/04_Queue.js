@@ -1,11 +1,11 @@
 let readlineSync = require('readline-sync');
 class QueueNodeClass {
-    constructor (e,newNode) {
+    constructor (e,newNode){
         this.valueInNode = e;
         this.NodeSucc = newNode;
     }
     getValueInNode() {return this.valueInNode;}
-    getElementInPosition(p) {
+    getElementInPosition(p){
         let i = -1;
         let curr = new QueueNodeClass(undefined,undefined);
         curr = this;
@@ -15,7 +15,7 @@ class QueueNodeClass {
         if (i===p) {return (curr.valueInNode);}
         else {return undefined;}
     }
-    putMeAtEndAfter(oldQueue) {
+    putMeAtEndAfter(oldQueue){
         let curr = new QueueNodeClass(undefined,undefined);
         curr = oldQueue;
         while (curr.NodeSucc !== undefined){
@@ -23,7 +23,7 @@ class QueueNodeClass {
         }
         curr.NodeSucc = this;
     }
-    removeElementInPosition(p) {
+    removeElementInPosition(p){
         let i = -1;
         let curr = new QueueNodeClass(undefined,undefined);
         let prev = new QueueNodeClass(undefined,undefined);
@@ -37,7 +37,7 @@ class QueueNodeClass {
         let s = 'Displaying the queue';
         let currSucc = this.NodeSucc;
         while (currSucc !== undefined){
-            if (currSucc.valueInNode !== undefined) {
+            if (currSucc.valueInNode !== undefined){
                 s = s + " <---- " + currSucc.valueInNode;
             }
             currSucc = currSucc.NodeSucc;
@@ -45,26 +45,27 @@ class QueueNodeClass {
         return(s);
     }
 }
-class NpQueueClass {
-    constructor (npqp) {
+
+class NpQueueClass{
+    constructor (npqp){
         this.queue = npqp;
     }
-    getElement() {
+    getElement(){
         return ((this.queue).getElementInPosition(0));
     }
-    removeCurrentElement() {
+    removeCurrentElement(){
         (this.queue).removeElementInPosition(0);
     }
-    displayMe() {
+    displayMe(){
         return(this.queue.displayMe());
     }
 }
-let captureElements = function (n1) {
+let captureElements = function (n1){
     let rootNode = new QueueNodeClass(undefined,undefined);
     let prevQueue = new QueueNodeClass(undefined,undefined);
     prevQueue = rootNode;
     let mess = 'Please enter your next element ';
-    for (let i = 0; i < n1; i++) {
+    for (let i = 0; i < n1; i++){
         let e = readlineSync.question(mess);
         let newNode = new QueueNodeClass(e,undefined);
         newNode.putMeAtEndAfter(prevQueue);
@@ -73,14 +74,14 @@ let captureElements = function (n1) {
 }
 let posInt = function(s){
     let n = Number(s);
-    return s!=='' && Number.isInteger(n) && n>=0;
+    return((s!=='') && (Number.isInteger(n)) &&  (n>=0))
 }
 
-while(true) {
+while(true){
     let mess1 = '\nPlease how many elements do you have? ';
     let mess2 = 'Only positive integers please!';
     let ns = readlineSync.question(mess1);
-    if (posInt(ns)){
+    if (posInt(ns)===true){
         let n = parseInt(ns);
         let npqn = new QueueNodeClass(undefined,undefined);
         npqn = captureElements(n);
@@ -92,4 +93,3 @@ while(true) {
         npq.removeCurrentElement(); console.log(npq.displayMe());
     } else {console.log(mess2);}
 }
-
