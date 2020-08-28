@@ -1,16 +1,14 @@
 let readline = require('readline-sync');
 
-let chcd =  function(n1, n2) {
-  r = Math.min(n1, n2);
-  while ( !( ((n1%r)==0) && ((n2%r)==0) ) ) {
-    r--;
-  }
+let gcd =  function(n1, n2) {
+  let r = Math.min(n1, n2);
+  while ( !( ((n1%r)===0) && ((n2%r)===0) ) ) {r--;}
   return r;
 }
 
 let strictlyPosInt = function(s){
   let n = Number(s);
-  return((s!='') && (Number.isInteger(n)) &&  (n>0))
+  return((s!=='') && (Number.isInteger(n)) &&  (n>0))
 }
 
 while (true){
@@ -20,12 +18,8 @@ while (true){
   let ns = readline.question(mess1);
   let ms = readline.question(mess2);
   if ((strictlyPosInt(ns)) && (strictlyPosInt(ms))){
-    n = parseInt(ns);
-    m = parseInt(ms);
-    console.log('HCD between '+n+' and '+m+ ' is '+chcd(n,m));
+    let n = parseInt(ns); let m = parseInt(ms);
+    console.log('GCD between '+n+' and '+m+ ' is '+gcd(n,m));
   }
-  else {
-    console.log(mess3);
-  }
+  else {console.log(mess3);}
 }
-
