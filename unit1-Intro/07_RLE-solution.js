@@ -20,7 +20,7 @@ let cutBlocks = function (s){
     return(bl);
 }
 
-let codeLength = function (bls) {
+let codeLength = function (bls){
     let r = 0;
     let i = 1;
     while(i<bls.length){
@@ -29,7 +29,7 @@ let codeLength = function (bls) {
         }
         i=i+2;
     }
-    return ((binarise(r)).length);
+    return((binarise(r)).length);
 }
 
 let completeZeros = function (s1,n1){
@@ -40,10 +40,10 @@ let completeZeros = function (s1,n1){
     return (r+s1);
 }
 
-let binarise = function (n1) {
+let binarise = function (n1){
     return (n1 >>> 0).toString(2);
 }
-let codeBlocks = function (bls) {
+let codeBlocks = function (bls){
     let l = codeLength(bls);
     let r = "";
     let i = 0;
@@ -53,7 +53,7 @@ let codeBlocks = function (bls) {
         r = r + bls[i] + z;
         i=i+2;
     }
-    return (r);
+    return(r);
 }
 
 let isBinary = function (s){
@@ -66,7 +66,7 @@ let isBinary = function (s){
 while (true){
     let mess = '\nEnter a binary number ';
     let b = readline.question(mess);
-    if ((b.length!==0) && (isBinary(b)===true)) {
+    if ((b.length!==0) && (isBinary(b)===true)){
         let blcs = new Array();
         blcs = cutBlocks(b);
         let cl = codeLength(blcs);

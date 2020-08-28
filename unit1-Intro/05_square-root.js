@@ -1,14 +1,14 @@
 let readline = require('readline-sync');
 
-let squRt = function (n1,d1) {
+let squRt = function (n1,d1){
     if ((n1>=0) && (d1>=0)) {
-        return Math.sqrt(n1).toFixed(d1);
+        return (Math.sqrt(n1)).toFixed(d1);
     }
 }
 
 let posInt = function(s){
     let n = Number(s);
-    return s!=='' && Number.isInteger(n) && n>=0;
+    return((s!=='') && (Number.isInteger(n)) && (n>=0))
 }
 
 while (true){
@@ -25,7 +25,7 @@ while (true){
         ms = ms + ' with ' + d + ' digits after dot: ' + r;
         console.log(ms + ' whose square is ' + (r*r) );
     }
-    else {
+    else{
         console.log(mess3);
     }
 }

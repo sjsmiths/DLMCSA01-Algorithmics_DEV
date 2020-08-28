@@ -6,7 +6,7 @@ while (true){
     let t = readline.question(m);
     let pat3s = /^(He|She|It)\s([a-z]*)s$/;
     let patOp = /^(I|You|We|They)\s([a-z]*)[^s]$/;
-    if (t.search(pat3s)!==0 && t.search(patOp)!==0){
+    if ((t.search(pat3s)!==0)&&(t.search(patOp)!==0)){
         console.log('Sentence ' + t + ' is grammatically incorrect');
     }
     else{
