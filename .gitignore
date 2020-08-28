@@ -1,4 +1,8 @@
 .idea
+*.iml
+.project
+
+.DS_Store
 
 node_modules
 pts.js

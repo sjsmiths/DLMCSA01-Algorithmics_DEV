@@ -42,7 +42,6 @@ class GraphClass {
         }
         return(s.slice(0,-1));
     }
-
     displayWeights(){
         let s = 'Displaying the weights\n';
         let n = this.getNbOfNodes();

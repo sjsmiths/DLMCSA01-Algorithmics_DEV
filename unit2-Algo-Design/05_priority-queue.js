@@ -42,6 +42,7 @@ class PQueueNodeClass {
         while (curr.NodeSucc !== undefined) {curr = curr.NodeSucc;}
         curr.NodeSucc = this;
     }
+
     removeElementInPosition(p){
         if (p !== -1){
             let curr=new PQueueNodeClass(undefined,undefined,undefined);

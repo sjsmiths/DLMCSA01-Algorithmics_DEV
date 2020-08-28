@@ -41,16 +41,16 @@ class BinTreeClass {
         return(s + '| |');
     }
 }
-let captureElements = function (bt,n1){
-    let m = bt.getTTNbOfElements()-1;
-    let mess1 = 'Node position between 0 and ' + m + ' please ';
-    let mess2 = 'Node element please? ';
-    for (let i = 0; i < n1; i++){
-        let myp = parseInt(readlineSync.question(mess1));
-        let e = readlineSync.question(mess2);
-        bt.putElementInNode(e,myp);
+    let captureElements = function (bt,n1){
+        let m = bt.getTTNbOfElements()-1;
+        let mess1 = 'Node position between 0 and ' + m + ' please ';
+        let mess2 = 'Node element please? ';
+        for (let i = 0; i < n1; i++){
+            let myp = parseInt(readlineSync.question(mess1));
+            let e = readlineSync.question(mess2);
+            bt.putElementInNode(e,myp);
+        }
     }
-}
 
 let posInt = function(s){
     let n = Number(s);
