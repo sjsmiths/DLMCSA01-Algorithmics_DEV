@@ -41,4 +41,4 @@ let randomSearchRunsOnMoreAndMore = function() {
     map(cRandomSearchRuns,builtArray(1,999))
 }
 
-"let pts = " + JSON.stringify(randomSearchRunsOnMoreAndMore()) + ";\nmodule.exports.exPts = pts;";
+"let pts = " + JSON.stringify(randomSearchRunsOnMoreAndMore()) + ";\n";

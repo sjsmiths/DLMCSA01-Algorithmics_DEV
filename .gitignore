@@ -2,6 +2,9 @@
 *.iml
 .project
 
+## produced within unit7
+pts.js
+
 .DS_Store
 
 node_modules
